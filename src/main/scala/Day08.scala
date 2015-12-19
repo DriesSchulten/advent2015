@@ -26,11 +26,11 @@ object Day08 extends App {
     }.length + 2
   }
 
-  println(input map { l =>
+  println(input.map { l =>
     l.length - unescape(l)
-  } sum)
+  }.sum)
 
-  println(input map { l =>
+  println(input.map { l =>
     escape(l) - l.length
-  } sum)
+  }.sum)
 }
