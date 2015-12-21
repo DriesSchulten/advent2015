@@ -15,12 +15,21 @@ object Day16 extends App {
     "vizslas" -> 0, "goldfish" -> 5, "trees" -> 3, "cars" -> 2, "perfumes" -> 1
   )
 
-  val result = data.filter {
-    case (id, properties) =>
-      desired.map {
-        case (property, value) => !properties.contains(property) || properties(property) == value
-      }.forall(_ == true)
-  }.map(_._1)
+  val lt = (left: Int, right: Int) => left < right
+  val gt = (left: Int, right: Int) => left > right
+  val eq = (left: Int, right: Int) => left == right
 
-  println(result.foreach(println(_)))
+  def filterData(comparators: Map[String, (Int, Int) => Boolean]) = {
+    data.filter {
+      case (id, properties) =>
+        desired.map {
+          case (property, value) => !properties.contains(property) || comparators.getOrElse(property, eq)(properties(property), value)
+        }.forall(_ == true)
+    }.keys
+  }
+
+  println(filterData(Map()).foreach(println(_)))
+
+  val propertyComparators = Map("pomeranians" -> lt, "goldfish" -> lt, "cats" -> gt, "trees" -> gt)
+  println(filterData(propertyComparators).foreach(println(_)))
 }
