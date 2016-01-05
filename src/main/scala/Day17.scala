@@ -1,9 +1,7 @@
 import scala.io.Source
 
 object Day17 extends App {
-  val input = Source.fromInputStream(getClass.getResourceAsStream("/Day17.input")).getLines().toList
-
-  val containers = input.map(_.toInt)
+  val input = Source.fromInputStream(getClass.getResourceAsStream("/Day17.input")).getLines().toList.map(_.toInt)
 
   def calculateCombinations(capacity: Int, containers: List[Int]): List[List[Int]] = {
      for {
@@ -12,7 +10,7 @@ object Day17 extends App {
      } yield combination.map(_._1)
   }
 
-  val combinations = calculateCombinations(150, containers)
+  val combinations = calculateCombinations(150, input)
   println(combinations.size)
 
   val min = combinations.map(_.size).min
